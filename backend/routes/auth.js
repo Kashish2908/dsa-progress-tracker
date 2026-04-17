@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 const sign = (userId) => jwt.sign({ userId }, process.env.JWT_SECRET || 'superdupersecretkey2026', { expiresIn: '7d' });
 
-router.post('register', async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
         if (!name || !email || !password)
@@ -16,11 +16,13 @@ router.post('register', async (req, res) => {
         const user = await User.create({ name, email, password });
         res.status(201).json({ token: sign(user._id), user: { id: user._id, name, email } });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ message: err.message });
     }
-})
+});
 
-router.post('login', async (req, res, next) => {
+
+router.post('/login', async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
@@ -31,6 +33,16 @@ router.post('login', async (req, res, next) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-})
+});
+
+// GET /api/auth/me
+router.get('/me', require('../middleware/auth'), async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('-password');
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 module.exports = router;

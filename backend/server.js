@@ -11,6 +11,7 @@ app.use(express.json());
 
 //routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/stats', require('./routes/stats'));
 app.use('/api/problems', require('./routes/problems'));
 
 //health check

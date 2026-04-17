@@ -8,25 +8,17 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     createdAt: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     },
     streak: { type: Number, default: 0 },
     lastActiveDate: Date,
 }, { timestamps: true });
 
-userSchema.pre('save', async function (next) {
-    try {
-        //check if the password has been modified
-        if (!this.isModified('password')) return next();
+userSchema.pre('save', async function () {
+    if (!this.isModified('password')) return;
 
-        //generate a salt and hash password
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
-
-        next(); //proceed to save
-    } catch (err) {
-        next(err); //pass any errors to the next middleware
-    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
 });
 
 
