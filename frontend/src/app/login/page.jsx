@@ -30,7 +30,7 @@ const LoginPage = () => {
           </div>
           <div className="p-7 bg-bg-2 rounded-2xl border border-white/7 ">
             <div className="text-white font-semibold text-lg mb-1">
-              Welcome back 
+              Welcome back
             </div>
             <div className="text-xs text-text-3 mb-6">
               Sign in to continue your practice
@@ -48,7 +48,9 @@ const LoginPage = () => {
             Demo use any email, password after registering
           </div>
 
-<div className="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">test</div>
+          <div className="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            test
+          </div>
         </div>
       </div>
     </>
